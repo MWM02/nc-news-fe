@@ -25,44 +25,51 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  justify-content: center;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
 h1 {
+  text-align: center;
   font-size: 3.2em;
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5em; /* Adjust h1 size on smaller screens */
   }
-  a:hover {
-    color: #747bff;
+
+  nav {
+    justify-content: space-around; /* Spread out nav items a bit more */
   }
-  button {
-    background-color: #f9f9f9;
+
+  nav a {
+    font-size: 1em; /* Make the nav links smaller on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2em; /* Reduce h1 size even further on smaller screens */
+  }
+
+  nav {
+    flex-direction: column; /* Stack nav items vertically */
+    padding: 1rem; /* Increase padding for better touch targets */
+  }
+
+  nav a {
+    font-size: 1.2em; /* Make the nav links slightly larger on very small screens */
+    margin: 0.5rem 0; /* Add spacing between nav links */
   }
 }
