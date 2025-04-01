@@ -4,15 +4,12 @@ const api = axios.create({
   baseURL: "https://news-site-mta3.onrender.com",
 });
 
-const getArticles = async () => {
-  try {
-    const {
-      data: { articles },
-    } = await api.get("/api/articles");
-    return articles;
-  } catch (error) {
-    console.log(error);
-  }
+const getArticles = async (pageNum, resultsPerPage) => {
+  const res = await api.get("/api/articles", {
+    params: { p: pageNum, limit: resultsPerPage },
+  });
+
+  return res;
 };
 
 export { getArticles };
