@@ -18,4 +18,12 @@ const getArticle = async (article_id) => {
   return res;
 };
 
-export { getArticles, getArticle };
+const getComments = async (article_id, pageNum, commentsPerPage) => {
+  const res = await api.get(`/api/articles/${article_id}/comments`, {
+    params: { p: pageNum, limit: commentsPerPage },
+  });
+
+  return res;
+};
+
+export { getArticles, getArticle, getComments };
