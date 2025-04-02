@@ -22,3 +22,14 @@ p {
 .article {
   text-align: center;
 }
+
+#comment-section-header {
+  text-align: center;
+  margin: 0px;
+}
+
+.load-more-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
