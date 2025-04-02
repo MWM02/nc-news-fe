@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import useApiRequest from "../custom_hooks/useApiRequest";
-import { getArticle } from "../api";
+import useApiRequest from "../../custom_hooks/useApiRequest";
+import { getArticle } from "../../api";
 import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
+import { CommentList } from "./CommentList";
 
 export const Article = () => {
   const { articleId } = useParams();
@@ -34,6 +35,10 @@ export const Article = () => {
           {data.article.votes} {data.article.votes === 1 ? "vote" : "votes"}
         </p>
       </article>
+      <CommentList
+        article_id={data.article.article_id}
+        comment_count={data.article.comment_count}
+      />
     </>
   );
 };

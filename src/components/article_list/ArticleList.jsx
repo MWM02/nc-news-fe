@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { getArticles } from "../api";
+import { getArticles } from "../../api";
 import { ArticleCard } from "./ArticleCard";
-import useApiRequest from "../custom_hooks/useApiRequest";
+import useApiRequest from "../../custom_hooks/useApiRequest";
 
 export const ArticleList = () => {
   const [page, setPage] = useState(1);

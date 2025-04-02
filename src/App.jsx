@@ -1,7 +1,7 @@
 import { Header } from "./components/Header";
 import { Nav } from "./components/Nav";
-import { ArticleList } from "./components/ArticleList";
-import { Article } from "./components/Article";
+import { ArticleList } from "./components/article_list/ArticleList";
+import { Article } from "./components/article/Article";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
