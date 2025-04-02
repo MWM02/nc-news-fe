@@ -12,4 +12,10 @@ const getArticles = async (pageNum, resultsPerPage) => {
   return res;
 };
 
-export { getArticles };
+const getArticle = async (article_id) => {
+  const res = await api.get(`/api/articles/${article_id}`);
+
+  return res;
+};
+
+export { getArticles, getArticle };
