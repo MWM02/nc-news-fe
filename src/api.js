@@ -32,4 +32,13 @@ const postVote = async (article_id, inc_votes) => {
   });
 };
 
-export { getArticles, getArticle, getComments, postVote };
+const postComment = async (article_id, body, username) => {
+  const res = await api.post(`/api/articles/${article_id}/comments`, {
+    username,
+    body,
+  });
+
+  return res;
+};
+
+export { getArticles, getArticle, getComments, postVote, postComment };
