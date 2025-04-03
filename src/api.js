@@ -26,4 +26,10 @@ const getComments = async (article_id, pageNum, commentsPerPage) => {
   return res;
 };
 
-export { getArticles, getArticle, getComments };
+const postVote = async (article_id, inc_votes) => {
+  await api.patch(`/api/articles/${article_id}`, {
+    inc_votes,
+  });
+};
+
+export { getArticles, getArticle, getComments, postVote };
