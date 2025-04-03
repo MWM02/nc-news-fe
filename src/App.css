@@ -33,3 +33,13 @@ p {
   justify-content: center;
   align-items: center;
 }
+
+#post-comment-area {
+  display: flex;
+  justify-content: center;
+}
+
+#post-text-area {
+  width: 80%;
+  resize: none;
+}

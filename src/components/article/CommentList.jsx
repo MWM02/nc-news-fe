@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { getComments } from "../../api";
 import { CommentCard } from "./CommentCard";
 
-export const CommentList = ({ article_id, comment_count }) => {
+export const CommentList = ({
+  article_id,
+  comment_count,
+  comments,
+  setComments,
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [comments, setComments] = useState([]);
   const [page, setPage] = useState(1);
   const [commemtsPerPage, setCommemtsPerPage] = useState(3);
   const lastPage = Math.ceil(comment_count / commemtsPerPage);
@@ -44,7 +48,6 @@ export const CommentList = ({ article_id, comment_count }) => {
   return (
     <>
       <section>
-        <h4 id="comment-section-header">Comments</h4>
         <ol>
           {comments.map((comment) => (
             <CommentCard key={comment.comment_id} comment={comment} />
