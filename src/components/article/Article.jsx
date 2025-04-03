@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import useApiRequest from "../../custom_hooks/useApiRequest";
 import { getArticle } from "../../api";
-import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
 import { CommentList } from "./CommentList";
+import { Vote } from "./Vote";
 
 export const Article = () => {
   const { articleId } = useParams();
   const { data, isLoading, error } = useApiRequest(getArticle, articleId);
-  const date = data ? new Date(data.article.created_at) : null;
+  const date = data && new Date(data.article.created_at);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -25,15 +25,9 @@ export const Article = () => {
         <h4>{date.toString()}</h4>
         <img src={data.article.article_img_url}></img>
         <p>{data.article.body}</p>
-        <p>
-          <button>
-            <BiSolidUpvote />
-          </button>
-          <button>
-            <BiSolidDownvote />
-          </button>
-          {data.article.votes} {data.article.votes === 1 ? "vote" : "votes"}
-        </p>
+        <div>
+          <Vote articleId={articleId} votes={data.article.votes} />
+        </div>
       </article>
       <CommentList
         article_id={data.article.article_id}
