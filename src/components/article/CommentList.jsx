@@ -50,7 +50,11 @@ export const CommentList = ({
       <section>
         <ol>
           {comments.map((comment) => (
-            <CommentCard key={comment.comment_id} comment={comment} />
+            <CommentCard
+              key={comment.comment_id}
+              comment={comment}
+              setComments={setComments}
+            />
           ))}
         </ol>
         {lastPage !== page - 1 && page !== null && (
