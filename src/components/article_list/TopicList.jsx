@@ -1,4 +1,5 @@
 import useApiRequest from "../../custom_hooks/useApiRequest";
+import { capitalise } from "../../utils/utils";
 import { getTopics } from "../../api";
 
 export const TopicList = ({ setSearchParams, topic }) => {
@@ -14,11 +15,11 @@ export const TopicList = ({ setSearchParams, topic }) => {
 
   return (
     <div>
-      <label htmlFor="topics"></label>
+      <label htmlFor="topics">Select Topic:</label>
       <select
         className="dropdown"
         id="topics"
-        value={topic}
+        value={topic || ""}
         onChange={(e) => {
           setSearchParams((prevSearchParams) => {
             prevSearchParams.set("p", 1);
@@ -34,7 +35,7 @@ export const TopicList = ({ setSearchParams, topic }) => {
         </option>
         {data.topics.map((topic) => (
           <option key={topic.slug} value={topic.slug}>
-            {topic.slug}
+            {capitalise(topic.slug)}
           </option>
         ))}
       </select>
