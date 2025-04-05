@@ -1,8 +1,11 @@
 import { getArticles } from "../../api";
 import { ArticleCard } from "./ArticleCard";
 import { TopicList } from "./TopicList";
+import { SortFilter } from "../reusable/SortFilter";
+import { OrderBy } from "../reusable/OrderBy";
 import useApiRequest from "../../custom_hooks/useApiRequest";
 import { useSearchParams } from "react-router-dom";
+import "./ArticleList.css";
 
 export const ArticleList = () => {
   const [searchParams, setSearchParams] = useSearchParams({ p: 1, limit: 10 });
@@ -10,12 +13,16 @@ export const ArticleList = () => {
     ? Number(searchParams.get("p"))
     : 1;
   const resultsPerPage = 10;
-  const topic = searchParams.get("topic") || "";
+  const topic = searchParams.get("topic");
+  const sort_by = searchParams.get("sort_by");
+  const order = searchParams.get("order");
   const { data, isLoading, error } = useApiRequest(
     getArticles,
     page,
     resultsPerPage,
-    topic
+    topic,
+    sort_by,
+    order
   );
   const lastPage = data ? Math.ceil(data.total_count / resultsPerPage) : null;
 
@@ -28,16 +35,19 @@ export const ArticleList = () => {
   }
 
   return (
-    <>
-      <section>
+    <main>
+      <div className="article-filters">
         <TopicList setSearchParams={setSearchParams} topic={topic} />
-        <ol className="article-list">
-          {data.articles.map((article) => (
-            <ArticleCard key={article.article_id} article={article} />
-          ))}
-        </ol>
-      </section>
-      <div className="page-buttons">
+        <SortFilter setSearchParams={setSearchParams} sort_by={sort_by} />
+        <OrderBy setSearchParams={setSearchParams} order={order} />
+      </div>
+
+      <ol className="article-list">
+        {data.articles.map((article) => (
+          <ArticleCard key={article.article_id} article={article} />
+        ))}
+      </ol>
+      <nav className="page-buttons">
         <button
           className="previous-page-button"
           onClick={() => {
@@ -63,7 +73,7 @@ export const ArticleList = () => {
         >
           {">"}
         </button>
-      </div>
-    </>
+      </nav>
+    </main>
   );
 };

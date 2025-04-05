@@ -4,9 +4,15 @@ const api = axios.create({
   baseURL: "https://news-site-mta3.onrender.com/api/",
 });
 
-const getArticles = async (pageNum, resultsPerPage, selectedTopic) => {
+const getArticles = async (p, limit, topic, sort_by, order) => {
   const res = await api.get("articles", {
-    params: { p: pageNum, limit: resultsPerPage, topic: selectedTopic },
+    params: {
+      p,
+      limit,
+      topic,
+      sort_by,
+      order,
+    },
   });
 
   return res;
