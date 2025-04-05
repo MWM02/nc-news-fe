@@ -1,16 +1,21 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import { getArticles } from "../../api";
 import { ArticleCard } from "./ArticleCard";
+import { TopicList } from "./TopicList";
 import useApiRequest from "../../custom_hooks/useApiRequest";
+import { useSearchParams } from "react-router-dom";
 
 export const ArticleList = () => {
-  const [page, setPage] = useState(1);
-  const [resultsPerPage, setResultsPerPage] = useState(10);
+  const [searchParams, setSearchParams] = useSearchParams({ p: 1, limit: 10 });
+  const page = Number(searchParams.get("p"))
+    ? Number(searchParams.get("p"))
+    : 1;
+  const resultsPerPage = 10;
+  const topic = searchParams.get("topic") || "";
   const { data, isLoading, error } = useApiRequest(
     getArticles,
     page,
-    resultsPerPage
+    resultsPerPage,
+    topic
   );
   const lastPage = data ? Math.ceil(data.total_count / resultsPerPage) : null;
 
@@ -25,6 +30,7 @@ export const ArticleList = () => {
   return (
     <>
       <section>
+        <TopicList setSearchParams={setSearchParams} topic={topic} />
         <ol className="article-list">
           {data.articles.map((article) => (
             <ArticleCard key={article.article_id} article={article} />
@@ -32,28 +38,31 @@ export const ArticleList = () => {
         </ol>
       </section>
       <div className="page-buttons">
-        <Link to={`/articles?p=${page - 1}&limit=${resultsPerPage}`}>
-          <button
-            className="previous-page-button"
-            onClick={() => {
-              setPage(page - 1);
-            }}
-            disabled={page === 1}
-          >
-            {"<"}
-          </button>
-        </Link>
-        <Link to={`/articles?p=${page + 1}&limit=${resultsPerPage}`}>
-          <button
-            className="next-page-button"
-            onClick={() => {
-              setPage(page + 1);
-            }}
-            disabled={page === lastPage}
-          >
-            {">"}
-          </button>
-        </Link>
+        <button
+          className="previous-page-button"
+          onClick={() => {
+            setSearchParams((prevSearchParams) => {
+              prevSearchParams.set("p", page - 1);
+              return prevSearchParams;
+            });
+          }}
+          disabled={page === 1}
+        >
+          {"<"}
+        </button>
+
+        <button
+          className="next-page-button"
+          onClick={() =>
+            setSearchParams((prevSearchParams) => {
+              prevSearchParams.set("p", page + 1);
+              return prevSearchParams;
+            })
+          }
+          disabled={page === lastPage}
+        >
+          {">"}
+        </button>
       </div>
     </>
   );
