@@ -2,7 +2,7 @@ import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
 import { getArticle, postVote } from "../../api";
 import { useState, useEffect } from "react";
 
-export const Vote = ({ articleId, votes }) => {
+export const Vote = ({ articleId }) => {
   const [likesCount, setLikesCount] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -56,7 +56,9 @@ export const Vote = ({ articleId, votes }) => {
         <BiSolidDownvote />
       </button>
       {optimisticLike && <p>{optimisticLike}</p>}
-      {likesCount} {votes === 1 ? "vote" : "votes"}
+      <span>
+        {likesCount} {likesCount === 1 ? "vote" : "votes"}
+      </span>
     </>
   );
 };
