@@ -1,25 +1,25 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://news-site-mta3.onrender.com",
+  baseURL: "https://news-site-mta3.onrender.com/api/",
 });
 
-const getArticles = async (pageNum, resultsPerPage) => {
-  const res = await api.get("/api/articles", {
-    params: { p: pageNum, limit: resultsPerPage },
+const getArticles = async (pageNum, resultsPerPage, selectedTopic) => {
+  const res = await api.get("articles", {
+    params: { p: pageNum, limit: resultsPerPage, topic: selectedTopic },
   });
 
   return res;
 };
 
 const getArticle = async (article_id) => {
-  const res = await api.get(`/api/articles/${article_id}`);
+  const res = await api.get(`articles/${article_id}`);
 
   return res;
 };
 
 const getComments = async (article_id, pageNum, commentsPerPage) => {
-  const res = await api.get(`/api/articles/${article_id}/comments`, {
+  const res = await api.get(`articles/${article_id}/comments`, {
     params: { p: pageNum, limit: commentsPerPage },
   });
 
@@ -27,13 +27,13 @@ const getComments = async (article_id, pageNum, commentsPerPage) => {
 };
 
 const postVote = async (article_id, inc_votes) => {
-  await api.patch(`/api/articles/${article_id}`, {
+  await api.patch(`articles/${article_id}`, {
     inc_votes,
   });
 };
 
 const postComment = async (article_id, body, username) => {
-  const res = await api.post(`/api/articles/${article_id}/comments`, {
+  const res = await api.post(`articles/${article_id}/comments`, {
     username,
     body,
   });
@@ -42,7 +42,13 @@ const postComment = async (article_id, body, username) => {
 };
 
 const deleteComment = async (comment_id) => {
-  const res = await api.delete(`/api/comments/${comment_id}`);
+  const res = await api.delete(`comments/${comment_id}`);
+
+  return res;
+};
+
+const getTopics = async () => {
+  const res = await api.get(`topics`);
 
   return res;
 };
@@ -54,4 +60,5 @@ export {
   postVote,
   postComment,
   deleteComment,
+  getTopics,
 };
