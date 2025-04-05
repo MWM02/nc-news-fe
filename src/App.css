@@ -1,3 +1,18 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 800px;
+  padding: 1rem;
+}
+
 ol {
   display: flex;
   flex-direction: column;
@@ -5,41 +20,14 @@ ol {
 }
 
 li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   padding: 1rem;
   margin-bottom: 5px;
   border: 1px solid gray;
-}
-
-p {
-  text-align: center;
-}
-
-.page-buttons {
-  text-align: center;
-}
-
-.article {
-  text-align: center;
-}
-
-#comment-section-header {
-  text-align: center;
-  margin: 0px;
-}
-
-.load-more-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#post-comment-area {
-  display: flex;
-  justify-content: center;
-}
-
-#post-text-area {
-  width: 80%;
-  resize: none;
+  border-radius: 5px;
+  background-color: rgb(253, 250, 246);
 }
