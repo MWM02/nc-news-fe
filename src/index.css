@@ -5,13 +5,11 @@
 }
 
 body {
-  font-family: "Arial", sans-serif;
-  background-color: rgb(250, 241, 230);
+  font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  background-color: #ffffff;
   color: #000000;
   line-height: 1.6;
-}
-
-body {
+  font-size: 16px;
   max-width: 100%;
   overflow-x: hidden;
 }

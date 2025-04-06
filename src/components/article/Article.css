@@ -1,0 +1,51 @@
+.article-section {
+  padding: 2rem;
+  padding-top: 0.5rem;
+  background-color: #ffffff;
+  line-height: 1.6;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 800px;
+  margin: 2rem auto;
+  border: 1px solid #e0e0e0;
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 1rem;
+}
+
+.article h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1d1d1d;
+}
+
+.article p {
+  font-size: 1rem;
+  color: #1d1d1d;
+  margin-bottom: 2rem;
+}
+
+.article img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+}
+
+.article time {
+  font-size: 0.9rem;
+  color: #6f675f;
+  font-style: italic;
+}
+
+.article-vote {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}

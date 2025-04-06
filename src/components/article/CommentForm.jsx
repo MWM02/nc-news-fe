@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../contexts/Users";
 import { postComment } from "../../api";
 import { useParams } from "react-router-dom";
+import "./Comment.css";
 
 export const CommentForm = ({ setComments }) => {
   const { user } = useContext(UserContext);
@@ -38,8 +39,10 @@ export const CommentForm = ({ setComments }) => {
         onChange={(e) => setCommentToPost(e.target.value)}
         disabled={isTextAreaDisabled}
       />
-      {error && <p>{error.message}</p>}
-      <button disabled={isPostDisabled}>Post</button>
+      {error && <p className="error-message">{error.message}</p>}
+      <button className="post-comment-button" disabled={isPostDisabled}>
+        Post
+      </button>
     </form>
   );
 };
