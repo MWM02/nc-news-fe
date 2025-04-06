@@ -1,27 +1,10 @@
 import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
-import { getArticle, postVote } from "../../api";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import "./Vote.css";
 
-export const Vote = ({ articleId }) => {
-  const [likesCount, setLikesCount] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const Vote = ({ voteFor, apiFunction, id, votes }) => {
+  const [likesCount, setLikesCount] = useState(votes);
   const [optimisticLike, setOptimisticLike] = useState("");
-
-  useEffect(() => {
-    getArticle(articleId)
-      .then(
-        ({
-          data: {
-            article: { votes },
-          },
-        }) => setLikesCount(votes)
-      )
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
 
   const handleVote = (interactionType) => {
     const interactionVotes = { like: 1, dislike: -1 };
@@ -29,7 +12,7 @@ export const Vote = ({ articleId }) => {
       (currentLikesCount) =>
         currentLikesCount + interactionVotes[interactionType]
     );
-    postVote(articleId, interactionVotes[interactionType]).catch(() => {
+    apiFunction(voteFor, id, interactionVotes[interactionType]).catch(() => {
       setLikesCount(
         (currentLikesCount) =>
           currentLikesCount - interactionVotes[interactionType]
@@ -39,26 +22,18 @@ export const Vote = ({ articleId }) => {
     });
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error.message}</p>;
-  }
-
   return (
-    <>
+    <div className="vote-section">
       <button onClick={() => handleVote("like")}>
         <BiSolidUpvote />
       </button>
+      <span>
+        {likesCount} {likesCount === 1 ? "vote" : "votes"}
+      </span>
       <button onClick={() => handleVote("dislike")}>
         <BiSolidDownvote />
       </button>
       {optimisticLike && <p>{optimisticLike}</p>}
-      <span>
-        {likesCount} {likesCount === 1 ? "vote" : "votes"}
-      </span>
-    </>
+    </div>
   );
 };

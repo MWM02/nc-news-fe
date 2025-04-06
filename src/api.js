@@ -32,10 +32,14 @@ const getComments = async (article_id, pageNum, commentsPerPage) => {
   return res;
 };
 
-const postVote = async (article_id, inc_votes) => {
-  await api.patch(`articles/${article_id}`, {
-    inc_votes,
-  });
+const postVote = async (voteFor, id, inc_votes) => {
+  const endpoints = {
+    articles: `articles/${id}`,
+    comments: `comments/${id}`,
+  };
+  const res = await api.patch(endpoints[voteFor], { inc_votes });
+
+  return res;
 };
 
 const postComment = async (article_id, body, username) => {
