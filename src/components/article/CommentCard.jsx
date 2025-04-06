@@ -1,9 +1,11 @@
-import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
+import { Vote } from "../reusable/Vote";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/Users";
 import { Delete } from "../reusable/Delete";
-import { deleteComment } from "../../api";
+import { deleteComment, postVote } from "../../api";
 import { useState, useEffect } from "react";
+import { timeFormatted } from "../../utils/utils";
+import "./Comment.css";
 
 export const CommentCard = ({ comment, setComments }) => {
   const { user } = useContext(UserContext);
@@ -22,18 +24,17 @@ export const CommentCard = ({ comment, setComments }) => {
 
   return (
     <li>
-      <p>
-        <button>
-          <BiSolidUpvote />
-        </button>
-        <button>
-          <BiSolidDownvote />
-        </button>
-        {comment.votes} {comment.votes === 1 ? "vote" : "votes"}
-      </p>
+      <div className="comment-vote">
+        <Vote
+          voteFor={"comments"}
+          apiFunction={postVote}
+          id={comment.comment_id}
+          votes={comment.votes}
+        />
+      </div>
       <p>{comment.body}</p>
       <p>{comment.author}</p>
-      <p>{comment.created_at}</p>
+      <time>{timeFormatted(comment.created_at)}</time>
       {deleteMessage ? (
         <p>{deleteMessage}</p>
       ) : (
