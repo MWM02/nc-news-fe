@@ -12,7 +12,7 @@ export const CommentForm = ({ setComments }) => {
   const [isTextAreaDisabled, setIsTextAreaDisabled] = useState(false);
   const isPostDisabled = commentToPost.length === 0;
 
-  const handlePost = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsTextAreaDisabled(true);
     postComment(articleId, commentToPost, user)
@@ -30,7 +30,7 @@ export const CommentForm = ({ setComments }) => {
   };
 
   return (
-    <form id="post-comment-area" onSubmit={handlePost}>
+    <form id="post-comment-area" onSubmit={handleSubmit}>
       <textarea
         id="post-text-area"
         placeholder="Join the conversation"
