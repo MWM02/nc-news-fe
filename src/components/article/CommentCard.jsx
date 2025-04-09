@@ -24,14 +24,12 @@ export const CommentCard = ({ comment, setComments }) => {
 
   return (
     <li>
-      <div className="comment-vote">
-        <Vote
-          voteFor={"comments"}
-          apiFunction={postVote}
-          id={comment.comment_id}
-          votes={comment.votes}
-        />
-      </div>
+      <Vote
+        voteFor={"comments"}
+        apiFunction={postVote}
+        id={comment.comment_id}
+        votes={comment.votes}
+      />
       <p>{comment.body}</p>
       <p>{comment.author}</p>
       <time>{timeFormatted(comment.created_at)}</time>

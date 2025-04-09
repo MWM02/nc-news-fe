@@ -25,7 +25,6 @@
 
 .article p {
   font-size: 1rem;
-  color: #1d1d1d;
   margin-bottom: 2rem;
 }
 
@@ -41,11 +40,4 @@
   font-size: 0.9rem;
   color: #6f675f;
   font-style: italic;
-}
-
-.article-vote {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
 }

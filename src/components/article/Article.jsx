@@ -32,14 +32,12 @@ export const Article = () => {
           <time>Posted on {timeFormatted(data.article.created_at)}</time>
           <img src={data.article.article_img_url}></img>
           <p>{data.article.body}</p>
-          <div className="article-vote">
-            <Vote
-              voteFor={"articles"}
-              apiFunction={postVote}
-              id={articleId}
-              votes={data.article.votes}
-            />
-          </div>
+          <Vote
+            voteFor={"articles"}
+            apiFunction={postVote}
+            id={articleId}
+            votes={data.article.votes}
+          />
         </article>
       </section>
       <section className="comment-section">

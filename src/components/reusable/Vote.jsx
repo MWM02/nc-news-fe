@@ -23,17 +23,21 @@ export const Vote = ({ voteFor, apiFunction, id, votes }) => {
   };
 
   return (
-    <div className="vote-section">
-      <button onClick={() => handleVote("like")}>
-        <BiSolidUpvote />
-      </button>
-      <span>
-        {likesCount} {likesCount === 1 ? "vote" : "votes"}
-      </span>
-      <button onClick={() => handleVote("dislike")}>
-        <BiSolidDownvote />
-      </button>
-      {optimisticLike && <p>{optimisticLike}</p>}
-    </div>
+    <>
+      <div className="vote-section">
+        <div className="vote-section-buttons">
+          <button onClick={() => handleVote("like")}>
+            <BiSolidUpvote />
+          </button>
+          <span>
+            {likesCount} {likesCount === 1 ? "vote" : "votes"}
+          </span>
+          <button onClick={() => handleVote("dislike")}>
+            <BiSolidDownvote />
+          </button>
+        </div>
+        {optimisticLike && <p className="error-message">{optimisticLike}</p>}
+      </div>
+    </>
   );
 };
