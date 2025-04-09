@@ -63,6 +63,13 @@ const getTopics = async () => {
   return res;
 };
 
+const postArticle = async (articleData) => {
+  console.log(articleData, "<---");
+  const res = await api.post(`articles`, articleData);
+
+  return res;
+};
+
 export {
   getArticles,
   getArticle,
@@ -71,4 +78,5 @@ export {
   postComment,
   deleteComment,
   getTopics,
+  postArticle,
 };
