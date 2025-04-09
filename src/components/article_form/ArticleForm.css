@@ -1,0 +1,63 @@
+#post-comment-area {
+  max-width: 800px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+#post-comment-area div {
+  display: flex;
+  flex-direction: column;
+}
+
+#post-comment-area label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+#post-comment-area input,
+#post-comment-area textarea {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  color: #000;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#post-comment-area textarea {
+  resize: none;
+  min-height: 150px;
+}
+
+#post-comment-area button {
+  align-self: flex-start;
+  background-color: #333;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#post-comment-area button:hover {
+  background-color: #555;
+}
+
+#post-comment-area p {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
