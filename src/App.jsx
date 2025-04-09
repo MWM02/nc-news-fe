@@ -4,6 +4,7 @@ import { Home } from "./components/Home";
 import { ArticleList } from "./components/article_list/ArticleList";
 import { Article } from "./components/article/Article";
 import { Routes, Route } from "react-router-dom";
+import { ArticleForm } from "./components/article_form/ArticleForm";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/articles" element={<ArticleList />} />
           <Route path="/articles/:articleId" element={<Article />} />
+          <Route path="/post-article" element={<ArticleForm />} />
         </Routes>
       </div>
     </div>
