@@ -1,7 +1,13 @@
+import { Link } from "react-router-dom";
+import { Nav } from "./Nav";
+
 export const Header = () => {
   return (
     <header>
-      <h1>NC News</h1>
+      <Link to={`/`}>
+        <h1>NC NEWS</h1>
+      </Link>
+      <Nav />
     </header>
   );
 };
