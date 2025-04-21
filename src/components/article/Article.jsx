@@ -26,24 +26,22 @@ export const Article = () => {
   return (
     <>
       <section className="article-section">
-        <article className="article">
+        <article className="article-section__article">
           <h2>{data.article.title}</h2>
           <p>By {data.article.author}</p>
           <time>Posted on {timeFormatted(data.article.created_at)}</time>
           <img src={data.article.article_img_url}></img>
           <p>{data.article.body}</p>
-          <div className="article-vote">
-            <Vote
-              voteFor={"articles"}
-              apiFunction={postVote}
-              id={articleId}
-              votes={data.article.votes}
-            />
-          </div>
+          <Vote
+            voteFor={"articles"}
+            apiFunction={postVote}
+            id={articleId}
+            votes={data.article.votes}
+          />
         </article>
       </section>
-      <section className="comment-section">
-        <h3 id="comment-section-header">Comments</h3>
+      <section className="comments-section">
+        <h3 class="comments-section__header">Comments</h3>
         <CommentForm setComments={setComments} />
         <CommentList
           article_id={data.article.article_id}

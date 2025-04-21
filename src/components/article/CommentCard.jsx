@@ -23,8 +23,9 @@ export const CommentCard = ({ comment, setComments }) => {
   }, [isDeleted]);
 
   return (
-    <li>
-      <div className="comment-vote">
+    <div className="comment-card">
+      <p className="comment-card__author">{comment.author}</p>
+      <div className="comment-card__vote">
         <Vote
           voteFor={"comments"}
           apiFunction={postVote}
@@ -32,21 +33,24 @@ export const CommentCard = ({ comment, setComments }) => {
           votes={comment.votes}
         />
       </div>
-      <p>{comment.body}</p>
-      <p>{comment.author}</p>
-      <time>{timeFormatted(comment.created_at)}</time>
-      {deleteMessage ? (
-        <p>{deleteMessage}</p>
-      ) : (
-        user === comment.author && (
-          <Delete
-            id={comment.comment_id}
-            apiFunction={deleteComment}
-            setIsDeleted={setIsDeleted}
-            setDeleteMessage={setDeleteMessage}
-          />
-        )
-      )}
-    </li>
+      <time className="comment-card__time">
+        {timeFormatted(comment.created_at)}
+      </time>
+      <p className="comment-card__body">{comment.body}</p>
+      <div className="comment-card__delete">
+        {deleteMessage ? (
+          <p className="error-message">{deleteMessage}</p>
+        ) : (
+          user === comment.author && (
+            <Delete
+              commentId={comment.comment_id}
+              apiFunction={deleteComment}
+              setIsDeleted={setIsDeleted}
+              setDeleteMessage={setDeleteMessage}
+            />
+          )
+        )}
+      </div>
+    </div>
   );
 };

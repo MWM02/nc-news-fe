@@ -16,9 +16,10 @@ export const CommentForm = ({ setComments }) => {
     e.preventDefault();
     setIsTextAreaDisabled(true);
     postComment(articleId, commentToPost, user)
-      .then(({ data: { comment } }) =>
-        setComments((prevComments) => [comment, ...prevComments])
-      )
+      .then(({ data: { comment } }) => {
+        setComments((prevComments) => [comment, ...prevComments]);
+        setCommentToPost("");
+      })
       .catch(() => {
         setError({ message: "Unable to post your comment. Please try again!" });
         setTimeout(() => setError(""), 2500);
@@ -26,13 +27,14 @@ export const CommentForm = ({ setComments }) => {
       .finally(() => {
         setIsTextAreaDisabled(false);
       });
-    setCommentToPost("");
   };
 
   return (
-    <form id="post-comment-area" onSubmit={handlePost}>
+    <form className="comment-form" onSubmit={handlePost}>
       <textarea
-        id="post-text-area"
+        className={`comment-form__textarea ${
+          isTextAreaDisabled ? "comment-form__textarea--disabled" : ""
+        }`}
         placeholder="Join the conversation"
         type="text"
         value={commentToPost}
@@ -40,7 +42,12 @@ export const CommentForm = ({ setComments }) => {
         disabled={isTextAreaDisabled}
       />
       {error && <p className="error-message">{error.message}</p>}
-      <button className="post-comment-button" disabled={isPostDisabled}>
+      <button
+        className={`comment-form__btn ${
+          isPostDisabled ? "comment-form__btn--disabled" : ""
+        }`}
+        disabled={isPostDisabled}
+      >
         Post
       </button>
     </form>

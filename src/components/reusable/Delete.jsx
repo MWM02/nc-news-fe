@@ -1,7 +1,12 @@
-export const Delete = ({ apiFunction, id, setIsDeleted, setDeleteMessage }) => {
+export const Delete = ({
+  apiFunction,
+  commentId,
+  setIsDeleted,
+  setDeleteMessage,
+}) => {
   const handleClick = () => {
     setDeleteMessage("Deleting...");
-    apiFunction(id)
+    apiFunction(commentId)
       .then(() => setIsDeleted(true))
       .catch(() => {
         setDeleteMessage("Delete failed. Please try again.");
@@ -11,5 +16,9 @@ export const Delete = ({ apiFunction, id, setIsDeleted, setDeleteMessage }) => {
       });
   };
 
-  return <button onClick={handleClick}>Delete</button>;
+  return (
+    <button className="delete__btn" onClick={handleClick}>
+      Delete
+    </button>
+  );
 };
