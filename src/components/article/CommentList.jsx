@@ -50,15 +50,13 @@ export const CommentList = ({
       <section>
         <ol>
           {comments.map((comment) => (
-            <CommentCard
-              key={comment.comment_id}
-              comment={comment}
-              setComments={setComments}
-            />
+            <li key={comment.comment_id}>
+              <CommentCard comment={comment} setComments={setComments} />
+            </li>
           ))}
         </ol>
         {lastPage !== page - 1 && page !== null && (
-          <div className="load-more-button">
+          <div className="loadmore">
             <button onClick={loadMore}>Load More</button>
           </div>
         )}

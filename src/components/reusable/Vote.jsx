@@ -5,9 +5,9 @@ import "./Vote.css";
 export const Vote = ({ voteFor, apiFunction, id, votes }) => {
   const [likesCount, setLikesCount] = useState(votes);
   const [optimisticLike, setOptimisticLike] = useState("");
+  const interactionVotes = { like: 1, dislike: -1 };
 
   const handleVote = (interactionType) => {
-    const interactionVotes = { like: 1, dislike: -1 };
     setLikesCount(
       (currentLikesCount) =>
         currentLikesCount + interactionVotes[interactionType]
@@ -24,15 +24,21 @@ export const Vote = ({ voteFor, apiFunction, id, votes }) => {
 
   return (
     <div className="vote-section">
-      <button onClick={() => handleVote("like")}>
+      <button
+        className="vote-section__up-btn"
+        onClick={() => handleVote("like")}
+      >
         <BiSolidUpvote />
       </button>
-      <span>
-        {likesCount} {likesCount === 1 ? "vote" : "votes"}
-      </span>
-      <button onClick={() => handleVote("dislike")}>
+      <button
+        className="vote-section__down-btn"
+        onClick={() => handleVote("dislike")}
+      >
         <BiSolidDownvote />
       </button>
+      <span className="vote-section__count">
+        {likesCount} {likesCount === 1 ? "vote" : "votes"}
+      </span>
       {optimisticLike && <p>{optimisticLike}</p>}
     </div>
   );

@@ -1,4 +1,6 @@
 import { capitalise } from "../../utils/utils";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import "./Filters.css";
 
 export const SortFilter = ({ setSearchParams, sort_by }) => {
   const sortBy = [
@@ -9,8 +11,9 @@ export const SortFilter = ({ setSearchParams, sort_by }) => {
     "votes",
     "comment_count",
   ];
+  const formattedSortBy = capitalise(sort_by).replace("_", " ");
 
-  const handleChange = (e) => {
+  const handleClick = (e) => {
     setSearchParams((prevSearchParams) => {
       prevSearchParams.set("p", 1);
       e.target.value
@@ -21,22 +24,23 @@ export const SortFilter = ({ setSearchParams, sort_by }) => {
   };
 
   return (
-    <div>
-      <label htmlFor="sort-by">Sort By:</label>
-      <select
-        className="dropdown"
-        id="sort-by"
-        value={sort_by || ""}
-        onChange={(e) => {
-          handleChange(e);
-        }}
-      >
+    <div className="dropdown">
+      <button className="dropdown__btn">
+        Sorted by: {formattedSortBy}
+        <RiArrowDropDownLine />
+      </button>
+      <div className="dropdown__content" style={{ left: 0 }}>
         {sortBy.map((sortByField) => (
-          <option key={sortByField} value={sortByField}>
+          <button
+            className="dropdown__item"
+            key={sortByField}
+            value={sortByField}
+            onClick={handleClick}
+          >
             {capitalise(sortByField).replace("_", " ")}
-          </option>
+          </button>
         ))}
-      </select>
+      </div>
     </div>
   );
 };

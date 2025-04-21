@@ -13,9 +13,9 @@ export const ArticleList = () => {
     ? Number(searchParams.get("p"))
     : 1;
   const resultsPerPage = 10;
-  const topic = searchParams.get("topic");
-  const sort_by = searchParams.get("sort_by");
-  const order = searchParams.get("order");
+  const topic = searchParams.get("topic") || "";
+  const sort_by = searchParams.get("sort_by") || "created_at";
+  const order = searchParams.get("order") || "desc";
   const { data, isLoading, error } = useApiRequest(
     getArticles,
     page,
@@ -35,16 +35,17 @@ export const ArticleList = () => {
   }
 
   return (
-    <main>
+    <>
       <div className="article-filters">
         <TopicList setSearchParams={setSearchParams} topic={topic} />
         <SortFilter setSearchParams={setSearchParams} sort_by={sort_by} />
         <OrderBy setSearchParams={setSearchParams} order={order} />
       </div>
-
       <ol className="article-list">
         {data.articles.map((article) => (
-          <ArticleCard key={article.article_id} article={article} />
+          <li key={article.article_id}>
+            <ArticleCard article={article} />
+          </li>
         ))}
       </ol>
       <nav className="page-buttons">
@@ -74,6 +75,6 @@ export const ArticleList = () => {
           {">"}
         </button>
       </nav>
-    </main>
+    </>
   );
 };

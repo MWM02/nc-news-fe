@@ -1,6 +1,8 @@
 import useApiRequest from "../../custom_hooks/useApiRequest";
 import { capitalise } from "../../utils/utils";
 import { getTopics } from "../../api";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import "../reusable/Filters.css";
 
 export const TopicList = ({ setSearchParams, topic }) => {
   const { data, isLoading, error } = useApiRequest(getTopics);
@@ -13,32 +15,42 @@ export const TopicList = ({ setSearchParams, topic }) => {
     return <p>{error.message}</p>;
   }
 
+  const handleClick = (e) => {
+    setSearchParams((prevSearchParams) => {
+      prevSearchParams.set("p", 1);
+      e.target.value
+        ? prevSearchParams.set("topic", e.target.value)
+        : prevSearchParams.delete("topic");
+      return prevSearchParams;
+    });
+  };
+
   return (
-    <div>
-      <label htmlFor="topics">Select Topic:</label>
-      <select
-        className="dropdown"
-        id="topics"
-        value={topic || ""}
-        onChange={(e) => {
-          setSearchParams((prevSearchParams) => {
-            prevSearchParams.set("p", 1);
-            e.target.value
-              ? prevSearchParams.set("topic", e.target.value)
-              : prevSearchParams.delete("topic");
-            return prevSearchParams;
-          });
-        }}
-      >
-        <option key="default" value="">
+    <div className="dropdown">
+      <button className="dropdown__btn">
+        Topic: {topic ? capitalise(topic) : "All topics"}
+        <RiArrowDropDownLine />
+      </button>
+      <div className="dropdown__content">
+        <button
+          className="dropdown__item"
+          key="default"
+          value=""
+          onClick={handleClick}
+        >
           All topics
-        </option>
+        </button>
         {data.topics.map((topic) => (
-          <option key={topic.slug} value={topic.slug}>
+          <button
+            className="dropdown__item"
+            key={topic.slug}
+            value={topic.slug}
+            onClick={handleClick}
+          >
             {capitalise(topic.slug)}
-          </option>
+          </button>
         ))}
-      </select>
+      </div>
     </div>
   );
 };
