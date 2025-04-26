@@ -41,7 +41,7 @@ export const Article = () => {
         </article>
       </section>
       <section className="comments-section">
-        <h3 class="comments-section__header">Comments</h3>
+        <h3 className="comments-section__header">Comments</h3>
         <CommentForm setComments={setComments} />
         <CommentList
           article_id={data.article.article_id}
