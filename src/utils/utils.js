@@ -10,3 +10,8 @@ export const timeFormatted = (date) => {
   };
   return newDate.toLocaleDateString(undefined, options);
 };
+
+export const validateImgUrl = (urlStr) => {
+  const urlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg))/i;
+  return urlRegex.test(urlStr);
+};
