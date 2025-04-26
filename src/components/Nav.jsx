@@ -5,7 +5,7 @@ export const Nav = () => {
     <nav>
       <Link to={`/`}>Home</Link>
       <Link to={`/articles`}>Articles</Link>
-      <>Post Article</>
+      <Link to={`/post-article`}>Post Article</Link>
     </nav>
   );
 };
