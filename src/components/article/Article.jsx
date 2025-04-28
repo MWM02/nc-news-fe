@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import useApiRequest from "../../custom_hooks/useApiRequest";
-import { getArticle } from "../../api";
+import { getArticle, postVote } from "../../api";
 import { CommentList } from "./CommentList";
 import { Vote } from "../reusable/Vote";
 import { CommentForm } from "./CommentForm";
-import { useState } from "react";
-import { postVote } from "../../api";
+import { ErrorPage } from "../ErrorPage";
 import { timeFormatted } from "../../utils/utils";
 import "./Article.css";
 import "./Comment.css";
@@ -20,7 +20,7 @@ export const Article = () => {
   }
 
   if (error) {
-    return <p>{error.message}</p>;
+    return error.includes("404") ? <ErrorPage /> : <p>{error.message}</p>;
   }
 
   return (
