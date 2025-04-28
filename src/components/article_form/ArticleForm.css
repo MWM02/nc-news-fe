@@ -25,12 +25,6 @@
   resize: vertical;
 }
 
-.error {
-  padding-top: 0.1rem;
-  min-height: 1.5rem;
-  font-weight: bold;
-}
-
 .article-form__btn {
   align-self: flex-start;
   padding: 0.5rem 1rem;

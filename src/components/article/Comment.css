@@ -69,7 +69,6 @@
 
 .comment-form__textarea {
   width: 100%;
-  min-height: 100px;
   padding: 0.5rem;
   font-size: 1rem;
   resize: vertical;
@@ -88,15 +87,14 @@
   padding: 0.5rem 1rem;
   font-size: 1rem;
   color: white;
-  background-color: #585858;
+  background-color: #999999;
   border-radius: 8px;
   border: 1px solid rgb(194, 194, 194);
   cursor: pointer;
 }
 
-.comment-form__btn--disabled {
-  background-color: #999999;
-  cursor: not-allowed;
+.comment-form__btn:hover {
+  background-color: #585858;
 }
 
 .loadmore {
