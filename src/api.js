@@ -69,6 +69,12 @@ const postArticle = async (articleData) => {
   return res;
 };
 
+const postTopic = async (topicData) => {
+  const res = await api.post(`topics`, topicData);
+
+  return res;
+};
+
 export {
   getArticles,
   getArticle,
@@ -78,4 +84,5 @@ export {
   deleteComment,
   getTopics,
   postArticle,
+  postTopic,
 };
