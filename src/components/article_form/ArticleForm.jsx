@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { validateImgUrl } from "../../utils/utils";
-import { postArticle, getTopics } from "../../api";
+import { postArticle, getTopics, postTopic } from "../../api";
 import { UserContext } from "../../contexts/Users";
 import "./ArticleForm.css";
 
@@ -10,13 +10,22 @@ export const ArticleForm = () => {
     title: "",
     topic: "",
     body: "",
-    article_img_url: "",
+    articleImgUrl: "",
     author: user,
+    topicDescription: "",
+    topicImgUrl: "",
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false); // replace with loading spinner
   const [postSuccess, setPostSuccess] = useState(false);
   const [topicExist, setTopicExist] = useState(true);
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    getTopics().then(({ data: { topics } }) => {
+      setTopics(topics.map((topics) => topics.slug));
+    });
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
@@ -30,9 +39,18 @@ export const ArticleForm = () => {
     if (!articleData.topic) {
       newErrors.topic = "Article topic is required";
     }
-    if (articleData.article_img_url) {
-      if (!validateImgUrl(articleData.article_img_url)) {
-        newErrors.article_img_url = "Invalid image URL";
+    if (articleData.articleImgUrl) {
+      if (!validateImgUrl(articleData.articleImgUrl)) {
+        newErrors.articleImgUrl = "Invalid image URL";
+      }
+    }
+    if (!topicExist && !articleData.topicDescription) {
+      newErrors.topicDescription =
+        "Topic description is required for new topics";
+    }
+    if (articleData.topicImgUrl) {
+      if (!validateImgUrl(articleData.topicExist)) {
+        newErrors.topicImgUrl = "Invalid image URL";
       }
     }
 
@@ -45,7 +63,11 @@ export const ArticleForm = () => {
     const { name, value } = e.target;
     setArticleData({ ...articleData, [name]: value });
 
-    if (value && errors[name]) {
+    if (name === "topic" && !topicExist) {
+      setTopicExist(true);
+    }
+
+    if (errors[name]) {
       setErrors((prevErrors) => {
         delete prevErrors[name];
         return { ...prevErrors };
@@ -56,30 +78,42 @@ export const ArticleForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    const isValid = validateForm();
 
-    if (validateForm()) {
-      getTopics()
-        .then(({ data: { topics } }) => {
-          let isValid = false;
-
-          topics.forEach((topic) => {
-            if (topic.slug === articleData.topic) {
-              isValid = true;
-            }
-          });
-
-          if (!isValid) {
-            setTopicExist(false);
-            return Promise.reject({
-              error: {
-                message:
-                  "Topic does not exist. Please add new topic before continuing!",
-              },
-            });
-          }
-        })
+    if (isValid && topics.includes(articleData.topic)) {
+      postArticle(articleData)
         .then(() => {
-          postArticle(articleData);
+          setPostSuccess(true);
+          setArticleData({
+            title: "",
+            topic: "",
+            body: "",
+            articleImgUrl: "",
+            author: user,
+            topicDescription: "",
+            topicImgUrl: "",
+          });
+          setTimeout(() => setPostSuccess(false), 3000);
+        })
+        .catch((error) => {
+          setErrors(error);
+          setTimeout(() => setErrors({}), 3000);
+        })
+        .finally(() => setIsLoading(false));
+    } else if (isValid && articleData.topicDescription) {
+      postTopic({
+        slug: articleData.topic,
+        description: articleData.topicDescription,
+        img_url: articleData.topicImgUrl || "",
+      })
+        .then(() => {
+          postArticle({
+            title: articleData.title,
+            topic: articleData.topic,
+            author: user,
+            body: articleData.body,
+            article_img_url: articleData.articleImgUrl,
+          });
         })
         .then(() => {
           setPostSuccess(true);
@@ -87,15 +121,27 @@ export const ArticleForm = () => {
             title: "",
             topic: "",
             body: "",
-            article_img_url: "",
+            articleImgUrl: "",
             author: user,
+            topicDescription: "",
+            topicImgUrl: "",
           });
           setTimeout(() => setPostSuccess(false), 3000);
         })
-        .catch(({ error }) => {
+        .catch((error) => {
           setErrors(error);
+          setTimeout(() => setErrors({}), 3000);
         })
         .finally(() => setIsLoading(false));
+    } else if (isValid && !topics.includes(articleData.topic)) {
+      setTopicExist(false);
+      setErrors((prevErrors) => {
+        return {
+          ...prevErrors,
+          message:
+            "Topic does not exist. Please add topic description before continuing!",
+        };
+      });
     }
   };
 
@@ -111,7 +157,7 @@ export const ArticleForm = () => {
             id="title"
             value={articleData.title}
             onChange={handleChange}
-          ></input>
+          />
           <div className="error">
             {errors.title && <p className="error-message">{errors.title}</p>}
           </div>
@@ -125,11 +171,49 @@ export const ArticleForm = () => {
             id="topic"
             value={articleData.topic}
             onChange={handleChange}
-          ></input>
+          />
           <div className="error">
             {errors.topic && <p className="error-message">{errors.topic}</p>}
           </div>
         </div>
+
+        {!topicExist && (
+          <>
+            <div className="article-form__field">
+              <label htmlFor="topic-description">Topic Description:</label>
+              <input
+                className="article-form__input"
+                type="text"
+                name="topicDescription"
+                id="topic-description"
+                value={articleData.topicDescription}
+                onChange={handleChange}
+              />
+              <div className="error">
+                {errors.topicDescription && (
+                  <p className="error-message">{errors.topicDescription}</p>
+                )}
+              </div>
+            </div>
+            <div className="article-form__field">
+              <label htmlFor="topic-image">Topic Image URL (Optional):</label>
+              <input
+                className="article-form__input"
+                type="text"
+                name="topicImgUrl"
+                id="topic-image"
+                value={articleData.topicImgUrl}
+                onChange={handleChange}
+              />
+              <div className="error">
+                {errors.topicImgUrl && (
+                  <p className="error-message">{errors.topicImgUrl}</p>
+                )}
+              </div>
+            </div>
+          </>
+        )}
+
         <div className="article-form__field">
           <label htmlFor="body">Content:</label>
           <textarea
@@ -139,24 +223,24 @@ export const ArticleForm = () => {
             id="body"
             value={articleData.body}
             onChange={handleChange}
-          ></textarea>
+          />
           <div className="error">
             {errors.body && <p className="error-message">{errors.body}</p>}
           </div>
         </div>
         <div className="article-form__field">
-          <label htmlFor="image">Image URL {"(Optional)"}:</label>
+          <label htmlFor="article image">Image URL (Optional):</label>
           <input
             className="article-form__input article-form__img-url"
             type="text"
-            name="article_img_url"
-            id="image"
-            value={articleData.article_img_url}
+            name="articleImgUrl"
+            id="article image"
+            value={articleData.articleImgUrl}
             onChange={handleChange}
-          ></input>
+          />
           <div className="error">
-            {errors.article_img_url && (
-              <p className="error-message">{errors.article_img_url}</p>
+            {errors.articleImgUrl && (
+              <p className="error-message">{errors.articleImgUrl}</p>
             )}
           </div>
         </div>
