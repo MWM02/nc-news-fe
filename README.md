@@ -34,7 +34,7 @@ Follow these steps to set up the project locally using the Command Line Interfac
 2. **Navigate into the project directory**:
 
    ```
-   cd nc-new-fe
+   cd nc-news-fe
    ```
 
 3. **Install dependencies**:
