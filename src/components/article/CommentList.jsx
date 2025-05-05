@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getComments } from "../../api";
 import { CommentCard } from "./CommentCard";
+import { LoadingSpinner } from "../reusable/LoadingSpinner";
 
 export const CommentList = ({
   article_id,
@@ -9,6 +10,7 @@ export const CommentList = ({
   setComments,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [commemtsPerPage, setCommemtsPerPage] = useState(3);
@@ -25,7 +27,7 @@ export const CommentList = ({
   }, []);
 
   const loadMore = () => {
-    setIsLoading(true);
+    setIsLoadingMore(true);
     if (page !== null) {
       getComments(article_id, page, commemtsPerPage)
         .then(({ data: { comments } }) => {
@@ -33,12 +35,12 @@ export const CommentList = ({
           setPage(page + 1);
         })
         .catch((error) => setError(error.message))
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsLoadingMore(false));
     }
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
@@ -57,7 +59,11 @@ export const CommentList = ({
         </ol>
         {lastPage !== page - 1 && page !== null && (
           <div className="loadmore">
-            <button onClick={loadMore}>Load More</button>
+            {isLoadingMore ? (
+              <LoadingSpinner />
+            ) : (
+              <button onClick={loadMore}>Load More</button>
+            )}
           </div>
         )}
       </section>

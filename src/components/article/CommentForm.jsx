@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../contexts/Users";
 import { postComment } from "../../api";
 import { useParams } from "react-router-dom";
+import { LoadingSpinner } from "../reusable/LoadingSpinner";
 import "./Comment.css";
 
 export const CommentForm = ({ setComments }) => {
@@ -9,7 +10,7 @@ export const CommentForm = ({ setComments }) => {
   const { articleId } = useParams();
   const [commentToPost, setCommentToPost] = useState("");
   const [error, setError] = useState({});
-  const [isTextAreaDisabled, setIsTextAreaDisabled] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
 
   const handlePost = (e) => {
     e.preventDefault();
@@ -18,7 +19,7 @@ export const CommentForm = ({ setComments }) => {
       setError({ message: "Need a comment to post!" });
       setTimeout(() => setError(""), 2500);
     } else {
-      setIsTextAreaDisabled(true);
+      setIsPosting(true);
       postComment(articleId, commentToPost, user)
         .then(({ data: { comment } }) => {
           setComments((prevComments) => [comment, ...prevComments]);
@@ -31,7 +32,7 @@ export const CommentForm = ({ setComments }) => {
           setTimeout(() => setError(""), 2500);
         })
         .finally(() => {
-          setIsTextAreaDisabled(false);
+          setIsPosting(false);
         });
     }
   };
@@ -40,15 +41,18 @@ export const CommentForm = ({ setComments }) => {
     <form className="comment-form" onSubmit={handlePost}>
       <textarea
         className={`comment-form__textarea ${
-          isTextAreaDisabled ? "comment-form__textarea--disabled" : ""
+          isPosting ? "comment-form__textarea--disabled" : ""
         }`}
         placeholder="Join the conversation"
-        type="text"
         value={commentToPost}
         onChange={(e) => setCommentToPost(e.target.value)}
-        disabled={isTextAreaDisabled}
+        disabled={isPosting}
       />
-      <button className="comment-form__btn">Post</button>
+      {isPosting ? (
+        <LoadingSpinner />
+      ) : (
+        <button className="comment-form__btn">Post</button>
+      )}
       <div className="error">
         {error && <p className="error-message">{error.message}</p>}
       </div>

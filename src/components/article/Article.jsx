@@ -7,6 +7,7 @@ import { Vote } from "../reusable/Vote";
 import { CommentForm } from "./CommentForm";
 import { ErrorPage } from "../ErrorPage";
 import { timeFormatted } from "../../utils/utils";
+import { LoadingSpinner } from "../reusable/LoadingSpinner";
 import "./Article.css";
 import "./Comment.css";
 
@@ -16,7 +17,7 @@ export const Article = () => {
   const [comments, setComments] = useState([]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
