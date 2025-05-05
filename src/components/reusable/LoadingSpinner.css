@@ -1,0 +1,19 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  aspect-ratio: 1 / 1;
+  border: 5px solid #ccc;
+  border-right-color: #000000;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

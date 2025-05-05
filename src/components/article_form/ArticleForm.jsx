@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { validateImgUrl } from "../../utils/utils";
 import { postArticle, getTopics, postTopic } from "../../api";
 import { UserContext } from "../../contexts/Users";
+import { LoadingSpinner } from "../reusable/LoadingSpinner";
 import "./ArticleForm.css";
 
 export const ArticleForm = () => {
@@ -16,7 +17,7 @@ export const ArticleForm = () => {
     topicImgUrl: "",
   });
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false); // replace with loading spinner
+  const [isPosting, setIsPosting] = useState(false);
   const [postSuccess, setPostSuccess] = useState(false);
   const [topicExist, setTopicExist] = useState(true);
   const [topics, setTopics] = useState([]);
@@ -77,7 +78,7 @@ export const ArticleForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsPosting(true);
     const isValid = validateForm();
 
     if (isValid && topics.includes(articleData.topic)) {
@@ -99,7 +100,7 @@ export const ArticleForm = () => {
           setErrors(error);
           setTimeout(() => setErrors({}), 3000);
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsPosting(false));
     } else if (isValid && articleData.topicDescription) {
       postTopic({
         slug: articleData.topic,
@@ -132,7 +133,7 @@ export const ArticleForm = () => {
           setErrors(error);
           setTimeout(() => setErrors({}), 3000);
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsPosting(false));
     } else if (isValid && !topics.includes(articleData.topic)) {
       setTopicExist(false);
       setErrors((prevErrors) => {
@@ -244,19 +245,18 @@ export const ArticleForm = () => {
             )}
           </div>
         </div>
-
-        <div>
+        {isPosting ? (
+          <LoadingSpinner />
+        ) : (
           <button className="article-form__btn" type="submit">
             Post Article
           </button>
-          <div className="user-feedback error">
-            {postSuccess && (
-              <p className="success-message">Your article has been posted!</p>
-            )}
-            {errors.message && (
-              <p className="error-message">{errors.message}</p>
-            )}
-          </div>
+        )}
+        <div className="user-feedback">
+          {postSuccess && (
+            <p className="success-message">Your article has been posted!</p>
+          )}
+          {errors.message && <p className="error-message">{errors.message}</p>}
         </div>
       </form>
     </>

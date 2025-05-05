@@ -3,6 +3,7 @@ import { ArticleCard } from "./ArticleCard";
 import { TopicList } from "./TopicList";
 import { SortFilter } from "../reusable/SortFilter";
 import { OrderBy } from "../reusable/OrderBy";
+import { LoadingSpinner } from "../reusable/LoadingSpinner";
 import useApiRequest from "../../custom_hooks/useApiRequest";
 import { useSearchParams } from "react-router-dom";
 import "./ArticleList.css";
@@ -27,7 +28,7 @@ export const ArticleList = () => {
   const lastPage = data ? Math.ceil(data.total_count / resultsPerPage) : null;
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
