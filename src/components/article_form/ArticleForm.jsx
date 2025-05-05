@@ -78,10 +78,10 @@ export const ArticleForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsPosting(true);
     const isValid = validateForm();
 
     if (isValid && topics.includes(articleData.topic)) {
+      setIsPosting(true);
       postArticle(articleData)
         .then(() => {
           setPostSuccess(true);
@@ -102,6 +102,7 @@ export const ArticleForm = () => {
         })
         .finally(() => setIsPosting(false));
     } else if (isValid && articleData.topicDescription) {
+      setIsPosting(true);
       postTopic({
         slug: articleData.topic,
         description: articleData.topicDescription,
