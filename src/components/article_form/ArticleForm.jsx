@@ -119,6 +119,7 @@ export const ArticleForm = () => {
         })
         .then(() => {
           setPostSuccess(true);
+          setTopicExist(true);
           setArticleData({
             title: "",
             topic: "",
