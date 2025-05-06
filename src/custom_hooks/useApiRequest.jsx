@@ -6,12 +6,14 @@ const useApiRequest = (apiFunction, ...args) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setIsLoading(true);
+    setError(null);
     apiFunction(...args)
       .then(({ data }) => {
         setData(data);
       })
       .catch((error) => {
-        setError(error.message);
+        setError(error);
       })
       .finally(() => {
         setIsLoading(false);

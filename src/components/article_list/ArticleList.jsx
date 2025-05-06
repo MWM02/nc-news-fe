@@ -32,7 +32,13 @@ export const ArticleList = () => {
   }
 
   if (error) {
-    return <p>{error.message}</p>;
+    const errorMessage = error.response?.data?.error?.message;
+    const errorCode = error.status;
+    return (
+      <div className="error-page">
+        <p>{errorCode + ": " + errorMessage}</p>
+      </div>
+    );
   }
 
   return (
