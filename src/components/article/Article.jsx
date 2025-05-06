@@ -5,7 +5,6 @@ import { getArticle, postVote } from "../../api";
 import { CommentList } from "./CommentList";
 import { Vote } from "../reusable/Vote";
 import { CommentForm } from "./CommentForm";
-import { ErrorPage } from "../ErrorPage";
 import { timeFormatted } from "../../utils/utils";
 import { LoadingSpinner } from "../reusable/LoadingSpinner";
 import "./Article.css";
@@ -21,7 +20,13 @@ export const Article = () => {
   }
 
   if (error) {
-    return error.includes("404") ? <ErrorPage /> : <p>{error.message}</p>;
+    const errorMessage = error.response?.data?.error?.message;
+    const errorCode = error.status;
+    return (
+      <div className="error-page">
+        <p>{errorCode + ": " + errorMessage}</p>
+      </div>
+    );
   }
 
   return (
