@@ -1,32 +1,15 @@
-import { getArticles } from "../../api";
 import { ArticleCard } from "./ArticleCard";
-import { TopicList } from "./TopicList";
-import { SortFilter } from "../reusable/SortFilter";
-import { OrderBy } from "../reusable/OrderBy";
 import { LoadingSpinner } from "../reusable/LoadingSpinner";
-import useApiRequest from "../../custom_hooks/useApiRequest";
-import { useSearchParams } from "react-router-dom";
 import "./ArticleList.css";
 
-export const ArticleList = () => {
-  const [searchParams, setSearchParams] = useSearchParams({ p: 1, limit: 10 });
-  const page = Number(searchParams.get("p"))
-    ? Number(searchParams.get("p"))
-    : 1;
-  const resultsPerPage = 10;
-  const topic = searchParams.get("topic") || "";
-  const sort_by = searchParams.get("sort_by") || "created_at";
-  const order = searchParams.get("order") || "desc";
-  const { data, isLoading, error } = useApiRequest(
-    getArticles,
-    page,
-    resultsPerPage,
-    topic,
-    sort_by,
-    order
-  );
-  const lastPage = data ? Math.ceil(data.total_count / resultsPerPage) : null;
-
+export const ArticleList = ({
+  setSearchParams,
+  data,
+  page,
+  lastPage,
+  isLoading,
+  error,
+}) => {
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -43,11 +26,6 @@ export const ArticleList = () => {
 
   return (
     <>
-      <div className="article-filters">
-        <TopicList setSearchParams={setSearchParams} topic={topic} />
-        <SortFilter setSearchParams={setSearchParams} sort_by={sort_by} />
-        <OrderBy setSearchParams={setSearchParams} order={order} />
-      </div>
       <ol className="article-list">
         {data.articles.map((article) => (
           <li key={article.article_id}>
