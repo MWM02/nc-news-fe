@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { capitalise } from "../../utils/utils";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
-import "./Filters.css";
+import "./FilterMenu.css";
 
 export const FilterMenu = ({ setSearchParams, sortBy, orderBy }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const filterMenuRef = useRef();
   const sortByFields = [
     "created_at",
     "author",
@@ -14,6 +15,17 @@ export const FilterMenu = ({ setSearchParams, sortBy, orderBy }) => {
     "votes",
     "comment_count",
   ];
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!filterMenuRef.current.contains(e.target)) {
+        setShowFilterMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const handleChange = (key, value, currValue) => {
     if (value !== currValue) {
@@ -28,63 +40,66 @@ export const FilterMenu = ({ setSearchParams, sortBy, orderBy }) => {
   return (
     <div className="dropdown">
       <button
-        className="dropdown__btn"
+        className={`dropdown__btn ${
+          showFilterMenu ? "dropdown__btn--active" : "dropdown__btn--inactive"
+        }`}
         onClick={() => setShowFilterMenu((prev) => !prev)}
       >
         Filters
         {showFilterMenu ? <RiArrowDropUpLine /> : <RiArrowDropDownLine />}
       </button>
-      {showFilterMenu && (
-        <div className="dropdown__content">
-          <fieldset>
-            <legend>Order by</legend>
-            <input
-              type="radio"
-              id="asc"
-              name="order-by"
-              value="asc"
-              checked={orderBy === "asc"}
-              onChange={(e) =>
-                handleChange("order_by", e.target.value, orderBy)
-              }
-            />
-            <label htmlFor="asc">Ascending</label>
-            <input
-              type="radio"
-              id="desc"
-              name="order-by"
-              value="desc"
-              checked={orderBy == "desc"}
-              onChange={(e) =>
-                handleChange("order_by", e.target.value, orderBy)
-              }
-            />
-            <label htmlFor="desc">Descending</label>
-          </fieldset>
-          <fieldset>
-            <legend>Sort by</legend>
-            {sortByFields.map((sortByField) => {
-              return (
-                <div key={sortByField}>
-                  <input
-                    type="radio"
-                    id={sortByField}
-                    name="sort-by"
-                    value={sortByField}
-                    checked={sortBy === sortByField}
-                    onChange={(e) =>
-                      handleChange("sort_by", e.target.value, sortBy)
-                    }
-                  />
-                  <label htmlFor={sortByField}>
-                    {capitalise(sortByField).replace("_", " ")}
-                  </label>
-                </div>
-              );
-            })}
-          </fieldset>
-        </div>
-      )}
+      <div
+        className={`dropdown__content ${
+          showFilterMenu
+            ? "dropdown__content--active"
+            : "dropdown__content--inactive"
+        }`}
+        ref={filterMenuRef}
+      >
+        <fieldset>
+          <legend>Order by</legend>
+          <input
+            type="radio"
+            id="asc"
+            name="order-by"
+            value="asc"
+            checked={orderBy === "asc"}
+            onChange={(e) => handleChange("order_by", e.target.value, orderBy)}
+          />
+          <label htmlFor="asc">Ascending</label>
+          <input
+            type="radio"
+            id="desc"
+            name="order-by"
+            value="desc"
+            checked={orderBy === "desc"}
+            onChange={(e) => handleChange("order_by", e.target.value, orderBy)}
+          />
+          <label htmlFor="desc">Descending</label>
+        </fieldset>
+        <fieldset>
+          <legend>Sort by</legend>
+          {sortByFields.map((sortByField) => {
+            return (
+              <div key={sortByField}>
+                <input
+                  type="radio"
+                  id={sortByField}
+                  name="sort-by"
+                  value={sortByField}
+                  checked={sortBy === sortByField}
+                  onChange={(e) =>
+                    handleChange("sort_by", e.target.value, sortBy)
+                  }
+                />
+                <label htmlFor={sortByField}>
+                  {capitalise(sortByField).replace("_", " ")}
+                </label>
+              </div>
+            );
+          })}
+        </fieldset>
+      </div>
     </div>
   );
 };
