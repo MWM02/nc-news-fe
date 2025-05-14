@@ -28,16 +28,23 @@
 }
 
 .dropdown__content {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  z-index: 1;
   background-color: white;
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   padding: 1rem;
   width: max-content;
   margin-top: 0.5rem;
+}
+
+.dropdown__content--active {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown__content--inactive {
+  display: none;
 }
 
 .dropdown__content fieldset {
