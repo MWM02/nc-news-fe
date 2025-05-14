@@ -1,6 +1,6 @@
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
-import { ArticleList } from "./components/article_list/ArticleList";
+import { Articles } from "./components/article_list/Articles";
 import { Article } from "./components/article/Article";
 import { ArticleForm } from "./components/article_form/ArticleForm";
 import { ErrorPage } from "./components/ErrorPage";
@@ -15,7 +15,7 @@ function App() {
       <main className="app__main">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/articles" element={<ArticleList />} />
+          <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:articleId" element={<Article />} />
           <Route path="/post-article" element={<ArticleForm />} />
           <Route path="*" element={<ErrorPage />} />
