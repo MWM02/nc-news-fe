@@ -2,9 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { capitalise } from "../../utils/utils";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
-import "./FilterMenu.css";
 
-export const FilterMenu = ({ setSearchParams, sortBy, orderBy }) => {
+export const FilterMenu = ({ setSearchParams, sortBy, orderBy, topic }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const filterMenuRef = useRef();
   const sortByFields = [
@@ -31,7 +30,7 @@ export const FilterMenu = ({ setSearchParams, sortBy, orderBy }) => {
     if (value !== currValue) {
       setSearchParams((prev) => {
         prev.set("p", 1);
-        value ? prev.set(key, value) : prev.delete(key);
+        prev.set(key, value);
         return prev;
       });
     }
@@ -81,21 +80,23 @@ export const FilterMenu = ({ setSearchParams, sortBy, orderBy }) => {
           <legend>Sort by</legend>
           {sortByFields.map((sortByField) => {
             return (
-              <div key={sortByField}>
-                <input
-                  type="radio"
-                  id={sortByField}
-                  name="sort-by"
-                  value={sortByField}
-                  checked={sortBy === sortByField}
-                  onChange={(e) =>
-                    handleChange("sort_by", e.target.value, sortBy)
-                  }
-                />
-                <label htmlFor={sortByField}>
-                  {capitalise(sortByField).replace("_", " ")}
-                </label>
-              </div>
+              (sortByField !== "topic" || !topic) && (
+                <div key={sortByField}>
+                  <input
+                    type="radio"
+                    id={sortByField}
+                    name="sort-by"
+                    value={sortByField}
+                    checked={sortBy === sortByField}
+                    onChange={(e) =>
+                      handleChange("sort_by", e.target.value, sortBy)
+                    }
+                  />
+                  <label htmlFor={sortByField}>
+                    {capitalise(sortByField).replace("_", " ")}
+                  </label>
+                </div>
+              )
             );
           })}
         </fieldset>
