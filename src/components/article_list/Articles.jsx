@@ -1,9 +1,9 @@
-import { getArticles } from "../../api";
 import { FilterMenu } from "./FilterMenu";
-import { useSearchParams } from "react-router-dom";
 import { ArticleList } from "./ArticleList";
+import { TopicSelector } from "./TopicSelector";
+import { getArticles } from "../../api";
+import { useSearchParams } from "react-router-dom";
 import useApiRequest from "../../custom_hooks/useApiRequest";
-import "./ArticleList.css";
 
 export const Articles = () => {
   const [searchParams, setSearchParams] = useSearchParams({ p: 1, limit: 10 });
@@ -24,11 +24,21 @@ export const Articles = () => {
 
   return (
     <>
-      <FilterMenu
-        setSearchParams={setSearchParams}
-        sortBy={sortBy}
-        orderBy={orderBy}
-      />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <h2 style={{ fontSize: "2rem" }}>
+          {topic ? topic.toUpperCase() : "ALL TOPICS"}
+        </h2>
+      </div>
+      <div style={{ display: "flex", gap: "2rem" }}>
+        <TopicSelector setSearchParams={setSearchParams} topic={topic} />
+        <FilterMenu
+          setSearchParams={setSearchParams}
+          sortBy={sortBy}
+          orderBy={orderBy}
+          topic={topic}
+        />
+      </div>
+
       <ArticleList
         setSearchParams={setSearchParams}
         data={data}

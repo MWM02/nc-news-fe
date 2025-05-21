@@ -62,7 +62,9 @@ export const CommentList = ({
             {isLoadingMore ? (
               <LoadingSpinner />
             ) : (
-              <button onClick={loadMore}>Load More</button>
+              <button className="loadmore__btn btn" onClick={loadMore}>
+                Load More
+              </button>
             )}
           </div>
         )}

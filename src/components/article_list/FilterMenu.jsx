@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { capitalise } from "../../utils/utils";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
-import "./FilterMenu.css";
 
 export const FilterMenu = ({ setSearchParams, sortBy, orderBy }) => {
   const [showFilterMenu, setShowFilterMenu] = useState(false);

@@ -5,7 +5,6 @@ import { Delete } from "../reusable/Delete";
 import { deleteComment, postVote } from "../../api";
 import { useState, useEffect } from "react";
 import { timeFormatted } from "../../utils/utils";
-import "./Comment.css";
 
 export const CommentCard = ({ comment, setComments }) => {
   const { user } = useContext(UserContext);

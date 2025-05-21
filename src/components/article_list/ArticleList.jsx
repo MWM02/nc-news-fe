@@ -1,6 +1,5 @@
 import { ArticleCard } from "./ArticleCard";
 import { LoadingSpinner } from "../reusable/LoadingSpinner";
-import "./ArticleList.css";
 
 export const ArticleList = ({
   setSearchParams,
