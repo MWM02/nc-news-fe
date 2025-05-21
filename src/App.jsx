@@ -5,8 +5,7 @@ import { Article } from "./components/article/Article";
 import { ArticleForm } from "./components/article_form/ArticleForm";
 import { ErrorPage } from "./components/ErrorPage";
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import "./index.css";
+import "./global.css";
 
 function App() {
   return (

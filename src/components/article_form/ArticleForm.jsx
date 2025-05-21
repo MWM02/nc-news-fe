@@ -3,7 +3,6 @@ import { validateImgUrl } from "../../utils/utils";
 import { postArticle, getTopics, postTopic } from "../../api";
 import { UserContext } from "../../contexts/Users";
 import { LoadingSpinner } from "../reusable/LoadingSpinner";
-import "./ArticleForm.css";
 
 export const ArticleForm = () => {
   const { user } = useContext(UserContext);
@@ -250,7 +249,7 @@ export const ArticleForm = () => {
         {isPosting ? (
           <LoadingSpinner />
         ) : (
-          <button className="article-form__btn" type="submit">
+          <button className="article-form__btn btn" type="submit">
             Post Article
           </button>
         )}

@@ -4,7 +4,6 @@ import { TopicSelector } from "./TopicSelector";
 import { getArticles } from "../../api";
 import { useSearchParams } from "react-router-dom";
 import useApiRequest from "../../custom_hooks/useApiRequest";
-import "./ArticleList.css";
 
 export const Articles = () => {
   const [searchParams, setSearchParams] = useSearchParams({ p: 1, limit: 10 });

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "./ArticleList.css";
 
 export const ArticleCard = ({ article }) => {
   return (

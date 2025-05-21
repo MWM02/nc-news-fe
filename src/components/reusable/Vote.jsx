@@ -1,6 +1,5 @@
 import { BiSolidUpvote, BiSolidDownvote } from "react-icons/bi";
 import { useState } from "react";
-import "./Vote.css";
 
 export const Vote = ({ voteFor, apiFunction, id, votes }) => {
   const [likesCount, setLikesCount] = useState(votes);

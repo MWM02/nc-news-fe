@@ -7,8 +7,6 @@ import { Vote } from "../reusable/Vote";
 import { CommentForm } from "./CommentForm";
 import { timeFormatted } from "../../utils/utils";
 import { LoadingSpinner } from "../reusable/LoadingSpinner";
-import "./Article.css";
-import "./Comment.css";
 
 export const Article = () => {
   const { articleId } = useParams();

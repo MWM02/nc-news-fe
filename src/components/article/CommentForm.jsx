@@ -3,7 +3,6 @@ import { UserContext } from "../../contexts/Users";
 import { postComment } from "../../api";
 import { useParams } from "react-router-dom";
 import { LoadingSpinner } from "../reusable/LoadingSpinner";
-import "./Comment.css";
 
 export const CommentForm = ({ setComments }) => {
   const { user } = useContext(UserContext);
@@ -51,7 +50,7 @@ export const CommentForm = ({ setComments }) => {
       {isPosting ? (
         <LoadingSpinner />
       ) : (
-        <button className="comment-form__btn">Post</button>
+        <button className="comment-form__btn btn">Post</button>
       )}
       <div className="error">
         {error && <p className="error-message">{error.message}</p>}
